@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    env_file:
+      - .env
+
+  kafka:
+      image: 'bitnami/kafka:latest'
+      ports:
+        - '9092:9092'
+      env_file:
+        - .env
+      depends_on:
+        - zookeeper
+      volumes:
+        - ./server.properties:/bitnami/kafka/config/server.properties
+  
+  gateway:
+    build: .
+    env_file:
+      - .env
+    restart: on-failure
+    ports:
+      - "514:514"
+    depends_on:
+      - kafka
+    
+  test_client:
+      build: .
+      env_file:
+        - .env
+      restart: on-failure
+      entrypoint: /bin/sh -c "python3 client.py"
+      depends_on:
+        - kafka
+        - gateway
+
+networks: 
+    external:
+      name: kafka_net
