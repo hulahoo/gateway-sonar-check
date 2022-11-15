@@ -10,7 +10,6 @@ if __name__ == "__main__":
     logger.remove()
     logger.configure(**conf)
 
-    logger.info(f"{settings.__dict__}")
-    with socketserver.TCPServer((settings.HOST, settings.PORT), SyslogTCPHandler) as server:
+    with socketserver.TCPServer((settings.EVENTS_HOST, settings.EVENTS_PORT), SyslogTCPHandler) as server:
         logger.info("Start listening...")
-        server.serve_forever()
+        server.serve_forever(poll_interval=0.5)
