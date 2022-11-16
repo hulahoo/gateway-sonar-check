@@ -5,3 +5,4 @@ loguru==0.6.0
 python-dotenv==0.21.0
 APScheduler==3.9.1.post1
 psycopg2==2.9.5
+psycopg2-binary==2.9.5
