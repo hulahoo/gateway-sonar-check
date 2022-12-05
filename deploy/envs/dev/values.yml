@@ -13,9 +13,9 @@ env:
   EVENTS_COLLECTOR_TOPIC="syslog"
   ALLOW_ANONYMOUS_LOGIN=yes
   ALLOW_PLAINTEXT_LISTENER=yes
-  POSTGRES_SERVER=""
-  POSTGRES_DB=""
-  POSTGRES_PORT=""
+  POSTGRES_SERVER="10.7.77.7"
+  POSTGRES_DB="mydb"
+  POSTGRES_PORT="5432"
 
 
 psvc:
@@ -34,6 +34,33 @@ psvc:
       methods: GET,POST
       zones: external
   publishAPI: true
+
+spec:
+  ports:
+    - name: syslog
+      port: 80
+      protocol: TCP
+      targetPort: 8000
+
+  livenessProbe:
+    failureThreshold: 5
+    httpGet:
+      path: /health/liveness
+      port: 8000
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    successThreshold: 1
+    timeoutSeconds: 1
+
+  readinessProbe:
+    failureThreshold: 3
+    httpGet:
+      path: /health/readiness
+      port: 8000
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    successThreshold: 1
+    timeoutSeconds: 1
 
 vaultSecretKeys:
   - POSTGRES_PASSWORD

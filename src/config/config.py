@@ -4,9 +4,12 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
 
     EVENTS_PORT: int = 9000
-    EVENTS_HOST: str = "localhost"
-    KAFKA_SERVER: str = "localhost"
+    EVENTS_HOST: str = "gateway"
+    KAFKA_SERVER: str = "kafka:9092"
     COLLECTOR_TOPIC: str = "collector"
+
+    # test
+    SYSLOG_HOST_TO_CONNECT: str = "localhost"
 
     POSTGRES_SERVER: str = "localhost"
     POSTGRES_PASSWORD: str = "password"

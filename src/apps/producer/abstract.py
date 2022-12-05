@@ -14,10 +14,6 @@ class AbstractProducer(ABC):
     """
 
     @abstractmethod
-    def start_producer(self):
-        raise NotImplementedError
-
-    @abstractmethod
     def send_message(self):
         raise NotImplementedError
 
@@ -27,6 +23,13 @@ class AbstractProducer(ABC):
 
 
 class BaseProducer(AbstractProducer):
+
+    __slots__ = ("message_to_send", "topic", "producer")
+
+    def __init__(self, topic: str, message_to_send: dict):
+        self.producer = self._start_producer()
+        self.message_to_send = message_to_send
+        self.topic = topic
 
     @logger.catch
     def _send_data(
@@ -46,13 +49,13 @@ class BaseProducer(AbstractProducer):
         """
         try:
             if isinstance(topic, str):
-                logger.info(f"Data send to: '{topic}' topic")
                 producer.send(topic=topic, value=data)
+                logger.info(f"Data send to: '{topic}' topic")
             elif isinstance(topic, list):
-                logger.info(f"Data send to: {topic} topic")
                 sequence_of_topics = topic
                 for _topic in sequence_of_topics:
                     producer.send(topic=_topic, value=data)
+                logger.info(f"Data send to: {topic} topic")
             producer.flush()
         except Exception as e:
             logger.exception(f"Error occured when send message. Error is: {e}")
@@ -70,12 +73,13 @@ class BaseProducer(AbstractProducer):
         :rtype: `class: aiokafka.AIOKafkaProducer`
         """
         try:
+            logger.info(f"{settings.KAFKA_SERVER}")
             producer = KafkaProducer(
                 bootstrap_servers=settings.KAFKA_SERVER,
                 value_serializer=lambda x: json.dumps(x).encode('utf-8'),
+                api_version=(0, 10, 1),
                 max_request_size=3718690
             )
-            producer.start()
         except Exception as e:
             logger.exception(f"Error occured when created producer. Error is: {e}")
             return
@@ -84,4 +88,4 @@ class BaseProducer(AbstractProducer):
 
     @logger.catch
     def _stop_producer(self):
-        self.producer.stop()
+        self.producer.close()

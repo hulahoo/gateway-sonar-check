@@ -1,10 +1,11 @@
 import socketserver
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 from loguru import logger
 
 from src.config.config import settings
 from src.apps.cron.job import CronModule
+from src.apps.models.models import PatternStorage
 from src.apps.producer.produce_message import producer_entrypoint
 from src.apps.consumer.services import log_text_to_json, base_field_extractor
 from src.apps.models.services import get_first_pattern, create_log_statistic
@@ -18,16 +19,14 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
     override the handle() method to implement communication to the
     client.
     """
-    def get_pattern(self):
+
+    def get_pattern(self) -> PatternStorage:
         return get_first_pattern()
 
-    def cron(self):
-        self.pattern = self.get_pattern()
-
-    def initialize(self):
-        self.pattern = self.get_pattern()
+    def initialize(self) -> None:
+        logger.info("Initializing cron jobs...")
         cron = CronModule()
-        cron.add_job(1, self.cron)
+        cron.add_job(1, self.get_pattern)
         cron.start()
 
     def handle(self) -> None:
@@ -35,18 +34,19 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
             self.initialize()
 
         incoming_events = bytes.decode(self.request.recv(1024).strip())
-        received_log_statistic = self.record_to_json(incoming_events=incoming_events, pattern=self.pattern)
+        received_log_statistic = self.record_to_json(incoming_events=incoming_events, pattern=self.get_pattern())
+        logger.info(f"Retrieved log statistic: {received_log_statistic}")
         if received_log_statistic is not None:
             try:
                 create_log_statistic(statistic=received_log_statistic)
                 self.send_incoming_event_to_kafka(incoming_events=incoming_events)
-                logger.info(f"Data was sent. Data is: {received_log_statistic}")
+                logger.info(f"Data was sent to events collector. Data is: {received_log_statistic}")
             except Exception as e:
                 logger.exception(f"Error occured: {e}")
                 return
 
     @staticmethod
-    def record_to_json(*, incoming_events: str, pattern: str):
+    def record_to_json(*, incoming_events: str, pattern: str) -> Optional[dict]:
         try:
             log = log_text_to_json(incoming_events, pattern)
             base_field_extractor(log)
@@ -56,7 +56,7 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
             return log_new
         except Exception as e:
             logger.exception(f"Error occured while creating log: {e}")
-            return None
+            return
 
     def send_incoming_event_to_kafka(self, incoming_events: Dict[str, Any]):
         producer_entrypoint(message_to_send=incoming_events, topic=settings.COLLECTOR_TOPIC)
