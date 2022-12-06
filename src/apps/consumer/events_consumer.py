@@ -7,7 +7,7 @@ from src.config.config import settings
 from src.apps.cron.job import CronModule
 from src.apps.models.models import PatternStorage
 from src.apps.producer.produce_message import producer_entrypoint
-from src.apps.consumer.services import log_text_to_json, base_field_extractor
+from src.apps.consumer.services import base_field_extractor, convert_to_dict
 from src.apps.models.services import get_first_pattern, create_log_statistic
 
 
@@ -35,7 +35,7 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
 
         incoming_events = bytes.decode(self.request.recv(1024).strip())
         received_log_statistic = self.record_to_json(incoming_events=incoming_events, pattern=self.get_pattern())
-        logger.info(f"Retrieved log statistic: {received_log_statistic}")
+        logger.info(f"Retrieved log statistic: {incoming_events}")
         if received_log_statistic is not None:
             try:
                 create_log_statistic(statistic=received_log_statistic)
@@ -46,9 +46,9 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
                 return
 
     @staticmethod
-    def record_to_json(*, incoming_events: str, pattern: str) -> Optional[dict]:
+    def record_to_json(*, incoming_events: str) -> Optional[dict]:
         try:
-            log = log_text_to_json(incoming_events, pattern)
+            log = convert_to_dict(incoming_events=incoming_events)
             base_field_extractor(log)
             log_new = {"feed": log, 'link': log.get('link', log.get('URL', '')), 'type': log.get('type', 'json')}
             log_new['feed']['link'] = log_new.get('link')

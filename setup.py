@@ -14,7 +14,7 @@ install_requires = [
 CI_PROJECT_NAME = os.environ.get("CI_PROJECT_NAME", "events-gateway").replace("-", "_")
 ARTIFACT_VERSION = os.environ.get("ARTIFACT_VERSION", "local")
 CI_PROJECT_TITLE = os.environ.get("CI_PROJECT_TITLE", "Коллектор событий")
-CI_PROJECT_URL = os.environ.get("CI_PROJECT_URL", "https://gitlab.rshbdev.ru/rshbintech/information-security/application-security/threat-intelligence/events-gateway")
+CI_PROJECT_URL = os.environ.get("CI_PROJECT_URL", "https://gitlab.in.axept.com/rshb/events-gateway")
 
 
 setup(
