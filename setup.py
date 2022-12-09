@@ -9,6 +9,9 @@ install_requires = [
     ('python-dotenv', '0.21.0'),
     ('APScheduler', '3.9.1.post1'),
     ('psycopg2-binary', '2.9.5'),
+    ('Flask-WTF', '1.0.1'),
+    ("flask-restplus", "0.13.0"),
+    ("Flask", "1.1.2")
 ]
 
 CI_PROJECT_NAME = os.environ.get("CI_PROJECT_NAME", "events-gateway").replace("-", "_")
