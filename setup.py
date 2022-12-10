@@ -33,7 +33,7 @@ setup(
     entry_points={
         'console_scripts': [
             CI_PROJECT_NAME + " = " + "eventsgateway:main",
-            CI_FLASK_NAME + " = " + "eventsgateway.web.app"
+            CI_FLASK_NAME + " = " + "eventsgateway.web:app"
         ]
     }
 )
