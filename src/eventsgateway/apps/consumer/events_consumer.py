@@ -38,7 +38,7 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
         if received_log_statistic is not None:
             try:
                 create_log_statistic(statistic=received_log_statistic)
-                self.send_incoming_event_to_kafka(incoming_events=incoming_events)
+                self.send_incoming_event_to_kafka(incoming_events=received_log_statistic)
                 logger.info(f"Data was sent to events collector. Data is: {received_log_statistic}")
             except Exception as e:
                 logger.exception(f"Error occured: {e}")

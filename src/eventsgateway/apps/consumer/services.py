@@ -33,7 +33,5 @@ def base_field_extractor(data: dict):
                 if field in key.lower():
                     data[field] = data[key]
                     break
-    if 'type' in data and data['type'] in types:
-        pass
-    else:
+    if 'type' not in data and data['type'] not in types:
         data['type'] = 'json'
