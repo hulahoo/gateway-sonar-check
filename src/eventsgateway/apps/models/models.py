@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Text
 from sqlalchemy.dialects.postgresql import JSONB
 
-from src.apps.models.abstract import TimestampBase, IDBase
+from src.eventsgateway.apps.models.abstract import TimestampBase, IDBase
 
 
 class PatternStorage(IDBase, TimestampBase):

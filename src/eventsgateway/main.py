@@ -1,11 +1,9 @@
 import socketserver
 
-from loguru import logger
-
-from src.config.config import settings
-from src.config.log_conf import conf
-from src.apps.models.migrations import create_migrations
-from src.apps.consumer.events_consumer import SyslogTCPHandler
+from src.eventsgateway.config.config import settings
+from src.eventsgateway.config.log_conf import logger
+from src.eventsgateway.apps.models.migrations import create_migrations
+from src.eventsgateway.apps.consumer.events_consumer import SyslogTCPHandler
 
 
 def start_serve():
@@ -18,8 +16,5 @@ def start_serve():
 
 
 if __name__ == "__main__":
-    logger.remove()
-    logger.configure(**conf)
-
     create_migrations()
     start_serve()

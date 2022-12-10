@@ -1,14 +1,13 @@
 import socketserver
 from typing import Dict, Any, Optional
 
-from loguru import logger
-
-from src.config.config import settings
-from src.apps.cron.job import CronModule
-from src.apps.models.models import PatternStorage
-from src.apps.producer.produce_message import producer_entrypoint
-from src.apps.consumer.services import base_field_extractor, convert_to_dict
-from src.apps.models.services import get_first_pattern, create_log_statistic
+from src.eventsgateway.config.config import settings
+from src.eventsgateway.config.log_conf import logger
+from src.eventsgateway.apps.cron.job import CronModule
+from src.eventsgateway.apps.models.models import PatternStorage
+from src.eventsgateway.apps.producer.produce_message import producer_entrypoint
+from src.eventsgateway.apps.consumer.services import base_field_extractor, convert_to_dict
+from src.eventsgateway.apps.models.services import get_first_pattern, create_log_statistic
 
 
 class SyslogTCPHandler(socketserver.BaseRequestHandler):
@@ -34,7 +33,7 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
             self.initialize()
 
         incoming_events = bytes.decode(self.request.recv(1024).strip())
-        received_log_statistic = self.record_to_json(incoming_events=incoming_events, pattern=self.get_pattern())
+        received_log_statistic = self.record_to_json(incoming_events=incoming_events)
         logger.info(f"Retrieved log statistic: {incoming_events}")
         if received_log_statistic is not None:
             try:

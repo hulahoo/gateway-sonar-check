@@ -1,7 +1,7 @@
 import json
 from typing import Dict
 
-from loguru import logger
+from src.eventsgateway.config.log_conf import logger
 
 
 def clean_item(i: str):

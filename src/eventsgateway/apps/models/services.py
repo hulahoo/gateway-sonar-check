@@ -1,7 +1,7 @@
 import json
 
-from src.apps.models.provider import PatternStorageProvider, LogStatisticProvider
-from src.apps.models.models import PatternStorage, LogStatistic
+from src.eventsgateway.apps.models.models import PatternStorage, LogStatistic
+from src.eventsgateway.apps.models.provider import PatternStorageProvider, LogStatisticProvider
 
 
 def get_first_pattern() -> PatternStorage:

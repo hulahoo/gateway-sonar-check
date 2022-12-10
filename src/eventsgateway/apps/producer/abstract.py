@@ -2,10 +2,10 @@ import json
 from abc import ABC, abstractmethod
 from typing import List, Union
 
-from loguru import logger
 from kafka.producer import KafkaProducer
 
-from src.config.config import settings
+from src.eventsgateway.config.log_conf import logger
+from src.eventsgateway.config.config import settings
 
 
 class AbstractProducer(ABC):
@@ -31,7 +31,6 @@ class BaseProducer(AbstractProducer):
         self.message_to_send = message_to_send
         self.topic = topic
 
-    @logger.catch
     def _send_data(
         self,
         *,
@@ -62,7 +61,6 @@ class BaseProducer(AbstractProducer):
         finally:
             self._stop_producer()
 
-    @logger.catch
     def _start_producer(self) -> KafkaProducer:
         """
         Создание продюсера
@@ -86,6 +84,5 @@ class BaseProducer(AbstractProducer):
         else:
             return producer
 
-    @logger.catch
     def _stop_producer(self):
         self.producer.close()

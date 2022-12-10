@@ -1,9 +1,8 @@
 from typing import Union, List
 
-from loguru import logger
-
-from src.apps.services import benchmark
-from src.apps.producer.abstract import BaseProducer
+from src.eventsgateway.config.log_conf import logger
+from src.eventsgateway.apps.services import benchmark
+from src.eventsgateway.apps.producer.abstract import BaseProducer
 
 
 class MessageProducer(BaseProducer):
