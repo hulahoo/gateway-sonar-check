@@ -11,11 +11,11 @@ class Settings(BaseSettings):
     # test
     SYSLOG_HOST_TO_CONNECT: str = "localhost"
 
-    POSTGRES_SERVER: str = "localhost"
-    POSTGRES_PASSWORD: str = "password"
-    POSTGRES_USER: str = "username"
-    POSTGRES_DB: str = "db"
-    POSTGRES_PORT: int = 5432
+    APP_POSTGRESQL_HOST: str = "localhost"
+    APP_POSTGRESQL_PASSWORD: str = "password"
+    APP_POSTGRESQL_USER: str = "username"
+    APP_POSTGRESQL_NAME: str = "db"
+    APP_POSTGRESQL_PORT: int = 5432
 
     class Config:
         env_file = "./.env"

@@ -55,8 +55,8 @@ class SyncPostgresDriver(Database):
         return scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=self._engine))
 
     def _get_db_url(self):
-        return f"postgresql://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@" \
-                f"{settings.POSTGRES_SERVER}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
+        return f"postgresql://{settings.APP_POSTGRESQL_USER}:{settings.APP_POSTGRESQL_PASSWORD}@" \
+                f"{settings.APP_POSTGRESQL_HOST}:{settings.APP_POSTGRESQL_PORT}/{settings.APP_POSTGRESQL_NAME}"
 
     @contextmanager
     def session(self):
