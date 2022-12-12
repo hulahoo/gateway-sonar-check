@@ -1,6 +1,6 @@
 import sqlalchemy
 
-from src.eventsgateway.apps.models.base import Base
+from apps.models.base import Base
 
 
 class IDBase(Base):

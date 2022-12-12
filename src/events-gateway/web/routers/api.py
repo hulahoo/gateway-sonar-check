@@ -1,5 +1,5 @@
-from src.eventsgateway.web.app import app
-from src.eventsgateway.config.log_conf import logger
+from web.app import app
+from config.log_conf import logger
 
 
 @app.route('/health/readiness', methods=["GET"])

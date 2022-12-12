@@ -1,6 +1,6 @@
 from typing import Dict
 
-from src.eventsgateway.config.log_conf import logger
+from config.log_conf import logger
 
 
 def convert_to_dict(*, incoming_events: str) -> Dict[str, Dict[str, str]]:

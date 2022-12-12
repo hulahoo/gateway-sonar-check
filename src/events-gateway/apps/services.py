@@ -1,7 +1,7 @@
 import time
 from functools import wraps
 
-from src.eventsgateway.config.log_conf import logger
+from config.log_conf import logger
 
 
 def benchmark(fn):
