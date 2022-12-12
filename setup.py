@@ -18,7 +18,7 @@ ARTIFACT_VERSION = os.environ.get("ARTIFACT_VERSION", "local")
 CI_PROJECT_TITLE = os.environ.get("CI_PROJECT_TITLE", "Коллектор событий")
 CI_PROJECT_URL = os.environ.get("CI_PROJECT_URL", "https://gitlab.in.axept.com/rshb/events-gateway")
 CI_FLASK_NAME = os.environ.get("CI_FLASK_NAME", "flask-app")
-FLASK_APP = os.environ.setdefault("FLASK_APP", "src/eventsgateway/web/app.py")
+FLASK_APP = os.environ.setdefault("FLASK_APP", "src/events_gateway/web/app.py")
 
 
 setup(
@@ -32,8 +32,8 @@ setup(
     package_dir={"": "src"},
     entry_points={
         'console_scripts': [
-            CI_PROJECT_NAME + " = " + "src.events-gateway:main",
-            CI_FLASK_NAME + " = " + "src.events-gateway.web:app"
+            CI_PROJECT_NAME + " = " + "events_gateway:main",
+            CI_FLASK_NAME + " = " + "events_gateway.web:app"
         ]
     }
 )
