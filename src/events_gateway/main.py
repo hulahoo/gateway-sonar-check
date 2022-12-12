@@ -15,6 +15,6 @@ def start_serve():
             logger.error(f"Error occured: {e}")
 
 
-if __name__ == "__main__":
+def execute():
     create_migrations()
     start_serve()

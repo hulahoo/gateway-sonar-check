@@ -33,8 +33,8 @@ setup(
     package_dir={"": "src"},
     entry_points={
         'console_scripts': [
-            CI_PROJECT_NAME + " = " + "events_gateway:main",
-            CI_FLASK_NAME + " = " + "events_gateway.web:app"
+            CI_PROJECT_NAME + " = " + "events_gateway.main:execute",
+            CI_FLASK_NAME + " = " + "events_gateway.web.app:execute"
         ]
     }
 )
