@@ -10,7 +10,7 @@ def start_serve():
     with socketserver.TCPServer((settings.EVENTS_HOST, settings.EVENTS_PORT), SyslogTCPHandler) as server:
         logger.info("Start listening...")
         try:
-            server.serve_forever(poll_interval=0.5)
+            server.serve_forever()
         except Exception as e:
             logger.error(f"Error occured: {e}")
 

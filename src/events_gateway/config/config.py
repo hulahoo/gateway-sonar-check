@@ -3,8 +3,8 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
 
-    EVENTS_PORT: int = 9000
-    EVENTS_HOST: str = "gateway"
+    EVENTS_PORT: int = 8000
+    EVENTS_HOST: str = "0.0.0.0"
     KAFKA_SERVER: str = "kafka:9092"
     COLLECTOR_TOPIC: str = "collector"
 
