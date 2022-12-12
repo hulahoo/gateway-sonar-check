@@ -1,9 +1,9 @@
 import socketserver
 
-from config.config import settings
-from config.log_conf import logger
-from apps.models.migrations import create_migrations
-from apps.consumer.events_consumer import SyslogTCPHandler
+from src.config.config import settings
+from src.config.log_conf import logger
+from src.apps.models.migrations import create_migrations
+from src.apps.consumer.events_consumer import SyslogTCPHandler
 
 
 def start_serve():
