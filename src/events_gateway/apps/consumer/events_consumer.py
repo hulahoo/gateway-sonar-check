@@ -6,7 +6,7 @@ from config.log_conf import logger
 from apps.cron.job import CronModule
 from apps.models.models import PatternStorage
 from apps.producer.produce_message import producer_entrypoint
-from apps.consumer.services import base_field_extractor, convert_to_dict
+from apps.consumer.services import convert_to_dict
 from apps.models.services import get_first_pattern, create_log_statistic
 
 
@@ -48,7 +48,6 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
     def record_to_json(*, incoming_events: str) -> Optional[dict]:
         try:
             log = convert_to_dict(incoming_events=incoming_events)
-            base_field_extractor(log)
             log_new = {"feed": log, 'link': log.get('link', log.get('URL', '')), 'type': log.get('type', 'json')}
             log_new['feed']['link'] = log_new.get('link')
             log_new['feed']['format_of_feed'] = log_new.get('type').upper()
