@@ -42,6 +42,6 @@ databases:
     name: mydb
 
 kafkaClusters:
-  cluster-1:
+  иti-cluster:
     topics:
       syslog:
