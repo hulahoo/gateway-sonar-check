@@ -1,5 +1,5 @@
-from config.log_conf import logger
-from apps.models.base import SyncPostgresDriver
+from events_gateway.config.log_conf import logger
+from events_gateway.apps.models.base import SyncPostgresDriver
 
 def create_migrations():
     with SyncPostgresDriver().session() as db:

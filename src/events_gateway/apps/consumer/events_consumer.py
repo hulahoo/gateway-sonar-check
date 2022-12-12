@@ -1,13 +1,13 @@
 import socketserver
 from typing import Dict, Any, Optional
 
-from config.config import settings
-from config.log_conf import logger
-from apps.cron.job import CronModule
-from apps.models.models import PatternStorage
-from apps.producer.produce_message import producer_entrypoint
-from apps.consumer.services import convert_to_dict
-from apps.models.services import get_first_pattern, create_log_statistic
+from events_gateway.config.config import settings
+from events_gateway.config.log_conf import logger
+from events_gateway.apps.cron.job import CronModule
+from events_gateway.apps.models.models import PatternStorage
+from events_gateway.apps.producer.produce_message import producer_entrypoint
+from events_gateway.apps.consumer.services import convert_to_dict
+from events_gateway.apps.models.services import get_first_pattern, create_log_statistic
 
 
 class SyslogTCPHandler(socketserver.BaseRequestHandler):

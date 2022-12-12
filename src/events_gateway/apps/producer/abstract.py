@@ -4,8 +4,8 @@ from typing import List, Union
 
 from kafka.producer import KafkaProducer
 
-from config.log_conf import logger
-from config.config import settings
+from events_gateway.config.log_conf import logger
+from events_gateway.config.config import settings
 
 
 class AbstractProducer(ABC):

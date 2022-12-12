@@ -2,8 +2,8 @@ import json
 
 from sqlalchemy import select, desc
 
-from apps.models.base import SyncPostgresDriver
-from apps.models.models import PatternStorage, LogStatistic
+from events_gateway.apps.models.base import SyncPostgresDriver
+from events_gateway.apps.models.models import PatternStorage, LogStatistic
 
 
 class PatternStorageProvider:

@@ -1,8 +1,8 @@
 from typing import Union, List
 
-from config.log_conf import logger
-from apps.services import benchmark
-from apps.producer.abstract import BaseProducer
+from events_gateway.config.log_conf import logger
+from events_gateway.apps.services import benchmark
+from events_gateway.apps.producer.abstract import BaseProducer
 
 
 class MessageProducer(BaseProducer):
