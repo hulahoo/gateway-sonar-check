@@ -34,7 +34,7 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
 
         incoming_events = bytes.decode(self.request.recv(1024).strip())
         received_log_statistic = self.record_to_json(incoming_events=incoming_events)
-        logger.info(f"Retrieved log statistic: {incoming_events}")
+        logger.info(f"Retrieved log statistic: {received_log_statistic}")
         if received_log_statistic is not None:
             try:
                 create_log_statistic(statistic=received_log_statistic)
