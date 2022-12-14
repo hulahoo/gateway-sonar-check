@@ -9,8 +9,9 @@ install_requires = [
     ('sqlalchemy', '1.4.44'),
     ('psycopg2-binary', '2.9.5'),
     ('Flask-WTF', '1.0.1'),
-    ("flask-restplus", "0.13.0"),
-    ("Flask", "2.1.0")
+    ('flask-restplus', '0.13.0'),
+    ('Flask', '2.1.0'),
+    ('psutil', '5.9.4')
 ]
 
 CI_PROJECT_NAME = os.environ.get("CI_PROJECT_NAME", "events-gateway")
