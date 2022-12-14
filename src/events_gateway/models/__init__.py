@@ -1,0 +1,1 @@
+from events_gateway.models.models import StatReceivedObjects # noqa

@@ -57,7 +57,7 @@ class BaseProducer(AbstractProducer):
                 logger.info(f"Data send to: {topic} topic")
             producer.flush()
         except Exception as e:
-            logger.exception(f"Error occured when send message. Error is: {e}")
+            logger.error(f"Error occured when send message. Error is: {e}")
         finally:
             self._stop_producer()
 
@@ -79,7 +79,7 @@ class BaseProducer(AbstractProducer):
                 max_request_size=3718690
             )
         except Exception as e:
-            logger.exception(f"Error occured when created producer. Error is: {e}")
+            logger.error(f"Error occured when created producer. Error is: {e}")
             return
         else:
             return producer

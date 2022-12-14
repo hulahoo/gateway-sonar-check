@@ -3,8 +3,9 @@ from typing import Dict, Any, Optional
 
 from events_gateway.config.config import settings
 from events_gateway.config.log_conf import logger
-from events_gateway.apps.producer.produce_message import producer_entrypoint
 from events_gateway.apps.consumer.services import convert_to_dict
+from events_gateway.apps.consumer.selectors import stat_received_provider
+from events_gateway.apps.producer.produce_message import producer_entrypoint
 
 
 class SyslogTCPHandler(socketserver.BaseRequestHandler):
@@ -18,6 +19,7 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
 
     def handle(self) -> None:
         incoming_events = bytes.decode(self.request.recv(1024).strip())
+        stat_received_provider.create()
         received_log_statistic = self.record_to_json(incoming_events=incoming_events)
         logger.info(f"Retrieved log statistic: {received_log_statistic}")
         if received_log_statistic is not None:
@@ -41,4 +43,4 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
             return
 
     def send_incoming_event_to_kafka(self, incoming_events: Dict[str, Any]):
-        producer_entrypoint(message_to_send=incoming_events, topic=settings.COLLECTOR_TOPIC)
+        producer_entrypoint(message_to_send=incoming_events, topic=settings.EVENTS_COLLECTOR_TOPIC)

@@ -10,6 +10,7 @@ install_requires = [
     ('psycopg2-binary', '2.9.5'),
     ('Flask-WTF', '1.0.1'),
     ('flask-restplus', '0.13.0'),
+    ('alembic', '1.8.1'),
     ('Flask', '2.1.0'),
     ('psutil', '5.9.4')
 ]
@@ -18,8 +19,6 @@ CI_PROJECT_NAME = os.environ.get("CI_PROJECT_NAME", "events-gateway")
 ARTIFACT_VERSION = os.environ.get("ARTIFACT_VERSION", "local")
 CI_PROJECT_TITLE = os.environ.get("CI_PROJECT_TITLE", "Коллектор событий")
 CI_PROJECT_URL = os.environ.get("CI_PROJECT_URL", "https://gitlab.in.axept.com/rshb/events-gateway")
-CI_FLASK_NAME = os.environ.get("CI_FLASK_NAME", "flask-app")
-FLASK_APP = os.environ.setdefault("FLASK_APP", "src/events_gateway/web/app.py")
 
 
 setup(

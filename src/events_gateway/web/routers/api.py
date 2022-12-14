@@ -1,8 +1,21 @@
 import time
 import psutil
 
-from events_gateway.web.app import app
+from flask import Flask
+from flask_wtf.csrf import CSRFProtect
+
 from events_gateway.config.log_conf import logger
+
+app = Flask(__name__)
+csrf = CSRFProtect()
+csrf.init_app(app)
+
+
+def execute():
+    """
+    Main function to start Flask application
+    """
+    app.run(host='0.0.0.0', port='8080')
 
 
 @app.route('/health/readiness', methods=["GET"])

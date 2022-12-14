@@ -8,8 +8,8 @@ from events_gateway.apps.producer.abstract import BaseProducer
 class MessageProducer(BaseProducer):
 
     def send_message(self, *, message_to_send: dict, topic: Union[List, str]):
+        logger.info("Sending event...")
         self._send_data(data=message_to_send, topic=topic, producer=self.producer)
-        logger.info("Message successfully sent!")
 
     @benchmark
     def start_process(self):
