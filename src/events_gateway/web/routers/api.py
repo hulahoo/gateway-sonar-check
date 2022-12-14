@@ -3,7 +3,6 @@ from events_gateway.config.log_conf import logger
 
 
 @app.route('/health/readiness', methods=["GET"])
-@logger.catch
 def readiness():
     """
     Текущее состояние готовности сервиса
@@ -17,7 +16,6 @@ def readiness():
 
 
 @app.route('/health/liveness', methods=["GET"])
-@logger.catch
 def liveness():
     """
     Возвращает информацию о работоспособности сервиса
