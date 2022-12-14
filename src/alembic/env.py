@@ -1,6 +1,5 @@
 import sys
 from os.path import abspath, dirname
-from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
@@ -14,10 +13,6 @@ sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 
 config = context.config
 target_metadata = Base.metadata
-
-
-if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
 
 
 def get_url():
