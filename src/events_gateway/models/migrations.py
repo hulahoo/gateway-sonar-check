@@ -3,8 +3,8 @@ import alembic.config
 
 def execute_migrations():
     os.chdir("src/")
-    alembicArgs = [
+    alembic_args = [
         '--raiseerr',
         'upgrade', 'head',
     ]
-    alembic.config.main(argv=alembicArgs)
+    alembic.config.main(argv=alembic_args)
