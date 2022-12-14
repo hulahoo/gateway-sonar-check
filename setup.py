@@ -6,7 +6,6 @@ install_requires = [
     ('flake8', '5.0.4'),
     ('pydantic', '1.10.2'),
     ('python-dotenv', '0.21.0'),
-    ('APScheduler', '3.9.1.post1'),
     ('sqlalchemy', '1.4.44'),
     ('psycopg2-binary', '2.9.5'),
     ('Flask-WTF', '1.0.1'),
