@@ -3,7 +3,6 @@ import socketserver
 from events_gateway.config.config import settings
 from events_gateway.web.app import execute as flask_app
 from events_gateway.config.log_conf import logger
-from events_gateway.apps.models.migrations import create_migrations
 from events_gateway.apps.consumer.events_consumer import SyslogTCPHandler
 
 
@@ -17,6 +16,5 @@ def start_serve():
 
 
 def execute():
-    create_migrations()
     start_serve()
     flask_app()

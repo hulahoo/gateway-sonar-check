@@ -3,11 +3,8 @@ from typing import Dict, Any, Optional
 
 from events_gateway.config.config import settings
 from events_gateway.config.log_conf import logger
-from events_gateway.apps.cron.job import CronModule
-from events_gateway.apps.models.models import PatternStorage
 from events_gateway.apps.producer.produce_message import producer_entrypoint
 from events_gateway.apps.consumer.services import convert_to_dict
-from events_gateway.apps.models.services import get_first_pattern, create_log_statistic
 
 
 class SyslogTCPHandler(socketserver.BaseRequestHandler):
@@ -19,25 +16,12 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
     client.
     """
 
-    def get_pattern(self) -> PatternStorage:
-        return get_first_pattern()
-
-    def initialize(self) -> None:
-        logger.info("Initializing cron jobs...")
-        cron = CronModule()
-        cron.add_job(1, self.get_pattern)
-        cron.start()
-
     def handle(self) -> None:
-        if not hasattr(self, "pattern"):
-            self.initialize()
-
         incoming_events = bytes.decode(self.request.recv(1024).strip())
         received_log_statistic = self.record_to_json(incoming_events=incoming_events)
         logger.info(f"Retrieved log statistic: {received_log_statistic}")
         if received_log_statistic is not None:
             try:
-                create_log_statistic(statistic=received_log_statistic)
                 self.send_incoming_event_to_kafka(incoming_events=received_log_statistic)
                 logger.info(f"Data was sent to events collector. Data is: {received_log_statistic}")
             except Exception as e:

@@ -26,12 +26,6 @@
     EVENTS_COLLECTOR_TOPIC="" # topic куда будут отправлены данные полученные по SYSLOG
     ALLOW_ANONYMOUS_LOGIN=(yes/no) # для логина в zookeper
     ALLOW_PLAINTEXT_LISTENER=(yes/no)
-
-    APP_POSTGRESQL_HOST=""
-    APP_POSTGRESQL_PASSWORD=""
-    APP_POSTGRESQL_USER=""
-    APP_POSTGRESQL_NAME=""
-    APP_POSTGRESQL_PORT=""
     ```
 
 ## Информация о файлах конфигурации
