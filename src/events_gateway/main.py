@@ -1,12 +1,16 @@
+import threading
 import socketserver
 
 from events_gateway.config.config import settings
-from events_gateway.web.app import execute as flask_app
 from events_gateway.config.log_conf import logger
+from events_gateway.web.app import execute as flask_app
 from events_gateway.apps.consumer.events_consumer import SyslogTCPHandler
 
 
 def start_serve():
+    """
+    Main function to start listening SYSLOG protocol
+    """
     with socketserver.TCPServer((settings.EVENTS_HOST, settings.EVENTS_PORT), SyslogTCPHandler) as server:
         logger.info("Start listening...")
         try:
@@ -16,5 +20,12 @@ def start_serve():
 
 
 def execute():
-    start_serve()
-    flask_app()
+    """
+    Function entrypoint to start:
+    1. SYSLOG protocol app to receive data
+    2. Flask application to serve enpoints
+    """
+    flask_thread = threading.Thread(target=flask_app)
+    syslog_thread = threading.Thread(target=start_serve)
+    flask_thread.start()
+    syslog_thread.start()
