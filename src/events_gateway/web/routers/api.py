@@ -10,6 +10,8 @@ app = Flask(__name__)
 csrf = CSRFProtect()
 csrf.init_app(app)
 
+mimetype = 'application/json'
+
 
 def execute():
     """
@@ -27,7 +29,7 @@ def readiness():
     return app.response_class(
         response={"status": "UP"},
         status=200,
-        mimetype='application/json'
+        mimetype=mimetype
     )
 
 
@@ -40,7 +42,7 @@ def liveness():
     return app.response_class(
         response={"status": "UP"},
         status=200,
-        mimetype='application/json'
+        mimetype=mimetype
     )
 
 
@@ -61,4 +63,16 @@ def metrics():
         response=f"{result_message} {time_}",
         status=200,
         mimetype='text/plain'
+    )
+
+
+@app.route('/api', methods=["GET"])
+def api_routes():
+    """
+    Возвращает api сервиса
+    """
+    return app.response_class(
+        response={"descrption": "Service does not provide api"},
+        status=200,
+        mimetype=mimetype
     )

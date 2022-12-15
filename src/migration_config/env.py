@@ -6,7 +6,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from events_gateway.models.base import Base, SyncPostgresDriver
+from src.events_gateway.models.base import Base, SyncPostgresDriver
 
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 
