@@ -12,7 +12,7 @@ install_requires = [
     ('flask-restplus', '0.13.0'),
     ('alembic', '1.8.1'),
     ('Flask', '2.1.0'),
-    ('psutil', '5.9.4')
+    ('prometheus-client', '0.15.0')
 ]
 
 CI_PROJECT_NAME = os.environ.get("CI_PROJECT_NAME", "events-gateway")

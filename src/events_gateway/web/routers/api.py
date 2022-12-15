@@ -1,10 +1,8 @@
-import time
-import psutil
-
 from flask import Flask
 from flask_wtf.csrf import CSRFProtect
 
 from events_gateway.config.log_conf import logger
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
 app = Flask(__name__)
 csrf = CSRFProtect()
@@ -51,18 +49,11 @@ def metrics():
     """
     Возвращает метрики сервиса
     """
-    service_cpu_load = psutil.cpu_percent()
-    service_ram_used = psutil.virtual_memory().total - psutil.virtual_memory().available
-    time_ = round(time.time() * 1000)
-    metrics = "cpu_load={cpu_load}, ram_used={ram_used}".format(
-        cpu_load=service_cpu_load, ram_used=service_ram_used
-    )
-    result_message = "service_metrics{" + metrics + "}"
-
     return app.response_class(
-        response=f"{result_message} {time_}",
+        response=generate_latest(),
         status=200,
-        mimetype='text/plain'
+        mimetype='text/plain',
+        content_type=CONTENT_TYPE_LATEST
     )
 
 
@@ -76,3 +67,14 @@ def api_routes():
         status=200,
         mimetype=mimetype
     )
+
+
+def api():
+    return {
+        "openapi:": "3.0.0",
+        "info": {
+            "title": "Событийный шлюз",
+            "version": "0.0.1",
+        },
+        "paths": {}
+        }
