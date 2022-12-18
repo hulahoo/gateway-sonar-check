@@ -110,3 +110,5 @@ venv.bak/
 .vscode
 *poetry.lock*
 */static*/
+Dockerfile
+docker-compose.yml
