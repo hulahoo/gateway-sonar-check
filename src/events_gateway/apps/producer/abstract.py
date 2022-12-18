@@ -71,9 +71,9 @@ class BaseProducer(AbstractProducer):
         :rtype: `class: aiokafka.AIOKafkaProducer`
         """
         try:
-            logger.info(f"{settings.KAFKA_SERVER}")
+            logger.info(f"{settings.KAFKA_BOOTSTRAP_SERVER}")
             producer = KafkaProducer(
-                bootstrap_servers=settings.KAFKA_SERVER,
+                bootstrap_servers=settings.KAFKA_BOOTSTRAP_SERVER,
                 value_serializer=lambda x: json.dumps(x).encode('utf-8'),
                 api_version=(0, 10, 1),
                 max_request_size=3718690

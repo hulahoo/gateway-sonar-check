@@ -10,7 +10,6 @@ install_requires = [
     ('psycopg2-binary', '2.9.5'),
     ('Flask-WTF', '1.0.1'),
     ('flask-restplus', '0.13.0'),
-    ('alembic', '1.8.1'),
     ('Flask', '2.1.0'),
     ('prometheus-client', '0.15.0')
 ]

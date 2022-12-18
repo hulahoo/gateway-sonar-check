@@ -1,14 +1,6 @@
 # Events Gateway
 
-Сервис для приема входящих сообщений от SIEM и маршрутизации их дальнейшей в Kafka (или в сервис обработки – опционально)
-
-## Накатка миграций
-Миграции можно запустить:
-    !Нужно перейти в дирекуторию src/
-    1. Локально, запустив файл следующим образом:
-        ```
-        alembic upgrade head
-        ```
+Сервис для приема входящих сообщений от SIEM и маршрутизации их дальнейшей в Kafka
 
 ## Информация о протоколе SYSLOG в проекте
 Для настройки порта и хоста по которым сервис должен быть доступным, указываем в .env файле следующее:
@@ -27,7 +19,7 @@
     APP_POSTGRESQL_USER
     APP_POSTGRESQL_NAME
     APP_POSTGRESQL_PORT
-    KAFKA_HOST
+    KAFKA_BOOSTRAP_SERVER
     EVENTS_COLLECTOR_TOPIC # topic куда будут отправлены данные полученные по SYSLOG
     ALLOW_ANONYMOUS_LOGIN=(yes/no) # для логина в zookeper
     ALLOW_PLAINTEXT_LISTENER=(yes/no)
@@ -48,7 +40,7 @@ source venv/bin/activate
 ```
 2. Собрать приложение: 
 ``` 
-python3 setup.py install
+python3 -m pip install .
 ```
 3. Запустить приложение: 
 ``` 
@@ -58,3 +50,5 @@ events-gateway
 ```
 python3 test.py
 ```
+
+## Накатка миграций происходит во время запуска консольной команды events-gateway.

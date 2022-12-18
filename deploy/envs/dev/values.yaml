@@ -19,7 +19,7 @@ databases:
     name: db
 
 env:
-  KAFKA_HOST: kafka.rshbdev.ru:9092
+  KAFKA_BOOTSTRAP_SERVER: kafka.rshbdev.ru:9092
   EVENTS_HOST: "0.0.0.0"
   EVENTS_PORT: 9000
   EVENTS_COLLECTOR_TOPIC: syslog

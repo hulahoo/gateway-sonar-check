@@ -5,7 +5,7 @@ class Settings(BaseSettings):
 
     EVENTS_PORT: int = 8000
     EVENTS_HOST: str = "0.0.0.0"
-    KAFKA_SERVER: str = "kafka:9092"
+    KAFKA_BOOTSTRAP_SERVER: str = "kafka:9092"
     EVENTS_COLLECTOR_TOPIC: str = "collector"
 
     APP_POSTGRESQL_HOST: str = "localhost"
