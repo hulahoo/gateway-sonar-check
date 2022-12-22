@@ -84,7 +84,11 @@ def api_routes():
 def force_update():
     incoming_data = request.get_json()
     logger.info(f"REQUEST IS: {type(incoming_data)}")
-    handler = SyslogTCPHandler(request=incoming_data, client_address=(settings.EVENTS_HOST, settings.EVENTS_PORT))
+    handler = SyslogTCPHandler(
+        server=None,
+        request=incoming_data,
+        client_address=(settings.EVENTS_HOST, settings.EVENTS_PORT),
+    )
     handler.handle()
     return app.response_class(
         response={"status": "FINISHED"},
