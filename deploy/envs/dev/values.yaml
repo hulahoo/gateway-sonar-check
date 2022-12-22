@@ -26,6 +26,8 @@ env:
   EVENTS_COLLECTOR_TOPIC: syslog
   ALLOW_ANONYMOUS_LOGIN: yes
   ALLOW_PLAINTEXT_LISTENER: yes
+  SESSION_COOKIE_SECURE: False
+  CSRF_ENABLED: False
 
 strategyType: Recreate
 
