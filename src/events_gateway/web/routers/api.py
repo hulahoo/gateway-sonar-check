@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, request
 from flask_wtf.csrf import CSRFProtect
-from flask_cors import CORS, cross_origin
+from flask_cors import cross_origin
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
 from events_gateway.config.log_conf import logger
@@ -16,7 +16,6 @@ app.config['SECRET_KEY'] = SECRET_KEY
 
 csrf = CSRFProtect()
 csrf.init_app(app)
-CORS(app)
 
 mimetype = 'application/json'
 
