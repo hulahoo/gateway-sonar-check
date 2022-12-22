@@ -18,8 +18,9 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
     """
 
     def handle(self) -> None:
-        incoming_events = self.request
+        incoming_events = bytes.decode(self.request)
         stat_received_provider.create()
+        logger.info("Stat received increased")
         received_log_statistic = self.record_to_json(incoming_events=incoming_events)
         logger.info(f"Retrieved log statistic: {received_log_statistic}")
         if received_log_statistic is not None:
@@ -27,7 +28,7 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
                 self.send_incoming_event_to_kafka(incoming_events=received_log_statistic)
                 logger.info(f"Data was sent to events collector. Data is: {received_log_statistic}")
             except Exception as e:
-                logger.exception(f"Error occured: {e}")
+                logger.error(f"Error occured: {e}")
                 return
 
     @staticmethod
@@ -39,7 +40,7 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
             log_new['feed']['format_of_feed'] = log_new.get('type').upper()
             return log_new
         except Exception as e:
-            logger.exception(f"Error occured while creating log: {e}")
+            logger.error(f"Error occured while creating log: {e}")
             return
 
     def send_incoming_event_to_kafka(self, incoming_events: Dict[str, Any]):

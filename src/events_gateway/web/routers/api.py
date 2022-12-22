@@ -83,8 +83,8 @@ def api_routes():
 @app.route("/api/force-update", methods=["POST"])
 @cross_origin(origins=["0.0.0.0"], methods=["POST", "OPTIONS"])
 def force_update():
-    incoming_data = request.get_json()
-    logger.info(f"REQUEST IS: {type(incoming_data)}")
+    incoming_data = request.get_data()
+    logger.info(f"Incoming request: {incoming_data}")
     handler = SyslogTCPHandler(
         server=None,
         request=incoming_data,
