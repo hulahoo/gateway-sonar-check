@@ -13,8 +13,8 @@ from events_gateway.apps.consumer.events_consumer import SyslogTCPHandler
 app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
-app.config["SESSION_COOKIE_SECURE"] = False
-app.config['WTF_CSRF_ENABLED'] = False
+app.config["SESSION_COOKIE_SECURE"] = settings.SESSION_COOKIE_SECURE
+app.config['WTF_CSRF_ENABLED'] = settings.CSRF_ENABLED
 
 csrf = CSRFProtect()
 csrf.init_app(app)
