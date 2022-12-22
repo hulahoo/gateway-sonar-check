@@ -1,12 +1,22 @@
-from flask import Flask
-from flask_wtf.csrf import CSRFProtect
+import os
 
-from events_gateway.config.log_conf import logger
+from flask import Flask, request
+from flask_wtf.csrf import CSRFProtect
+from flask_cors import CORS, cross_origin
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
+from events_gateway.config.log_conf import logger
+from events_gateway.config.config import settings
+from events_gateway.main import SyslogTCPHandler
+
+
 app = Flask(__name__)
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
+
 csrf = CSRFProtect()
 csrf.init_app(app)
+CORS(app)
 
 mimetype = 'application/json'
 
@@ -67,3 +77,17 @@ def api_routes():
         },
         "paths": {}
         }
+
+
+@app.route("/api/force-update", methods=["POST"])
+@cross_origin()
+def force_update():
+    incoming_data = request.get_json()
+    logger.info(f"REQUEST IS: {type(incoming_data)}")
+    handler = SyslogTCPHandler(request=incoming_data, client_address=(settings.EVENTS_HOST, settings.EVENTS_PORT))
+    handler.handle()
+    return app.response_class(
+        response={"status": "FINISHED"},
+        status=200,
+        mimetype=mimetype
+    )

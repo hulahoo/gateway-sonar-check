@@ -1,6 +1,7 @@
 psvc:
   name: Сервис Событийного шлюза
   description: Сервис доступа к шлюзу событий
+  publishAPI: true
 
 replicaCount: 1
 

@@ -11,6 +11,7 @@ install_requires = [
     ('Flask-WTF', '1.0.1'),
     ('flask-restplus', '0.13.0'),
     ('Flask', '2.1.0'),
+    ('flask-cors', '3.0.10'),
     ('prometheus-client', '0.15.0')
 ]
 

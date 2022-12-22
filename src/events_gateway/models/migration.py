@@ -11,7 +11,7 @@ def apply_migrations() -> None:
     engine: Engine = SyncPostgresDriver()._engine
     tables_list = [StatReceivedObjects.__tablename__]
 
-    if not inspect(engine).has_table("stat_checked_objects"):
+    if not inspect(engine).has_table("stat_received_objects"):
         StatReceivedObjects.__table__.create(engine)
         tables_list.remove(StatReceivedObjects.__tablename__)
         logger.info("Table StatReceivedObjects created")

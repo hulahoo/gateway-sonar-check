@@ -18,7 +18,7 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
     """
 
     def handle(self) -> None:
-        incoming_events = bytes.decode(self.request.recv(1024).strip())
+        incoming_events = self.request
         stat_received_provider.create()
         received_log_statistic = self.record_to_json(incoming_events=incoming_events)
         logger.info(f"Retrieved log statistic: {received_log_statistic}")
