@@ -7,7 +7,7 @@ from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
 from events_gateway.config.log_conf import logger
 from events_gateway.config.config import settings
-from events_gateway.main import SyslogTCPHandler
+from events_gateway.apps.consumer.events_consumer import SyslogTCPHandler
 
 
 app = Flask(__name__)
