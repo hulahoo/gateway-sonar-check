@@ -4,7 +4,6 @@ import socketserver
 from events_gateway.config.config import settings
 from events_gateway.config.log_conf import logger
 from events_gateway.web.routers.api import execute as flask_app
-from events_gateway.models.migration import apply_migrations
 from events_gateway.apps.consumer.events_consumer import SyslogTCPHandler
 
 
@@ -27,8 +26,6 @@ def execute():
     2. Flask application to serve enpoints
     3. Apply migrations
     """
-    apply_migrations()
-
     flask_thread = threading.Thread(target=flask_app)
     syslog_thread = threading.Thread(target=start_serve)
     flask_thread.start()
