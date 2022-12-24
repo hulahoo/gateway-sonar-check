@@ -87,7 +87,7 @@ FROM python:3.10.8-slim as runtime
 COPY --from=build /app/dist/*.whl /app/
 RUN apt-get update -y && apt-get -y install gcc python3-dev
 RUN pip --no-cache-dir install /app/*.whl
-ENTRYPOINT ["events-collector"]
+ENTRYPOINT ["events-gateway"]
 ```
 
 2. docker-compose.yml
