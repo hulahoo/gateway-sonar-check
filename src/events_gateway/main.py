@@ -28,5 +28,9 @@ def execute():
     """
     flask_thread = threading.Thread(target=flask_app)
     syslog_thread = threading.Thread(target=start_serve)
+
+    logger.info("Start Flask app")
     flask_thread.start()
+
+    logger.info("Start gateway")
     syslog_thread.start()
