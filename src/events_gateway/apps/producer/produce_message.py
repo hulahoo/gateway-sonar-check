@@ -1,7 +1,6 @@
 from typing import Union, List
 
 from events_gateway.config.log_conf import logger
-from events_gateway.apps.services import benchmark
 from events_gateway.apps.producer.abstract import BaseProducer
 
 
@@ -11,7 +10,6 @@ class MessageProducer(BaseProducer):
         logger.info("Sending event...")
         self._send_data(data=message_to_send, topic=topic, producer=self.producer)
 
-    @benchmark
     def start_process(self):
         self.send_message(message_to_send=self.message_to_send, topic=self.topic)
 

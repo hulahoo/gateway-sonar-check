@@ -90,7 +90,7 @@ def force_update():
         request=incoming_data,
         client_address=(settings.EVENTS_HOST, settings.EVENTS_PORT),
     )
-    handler.handle()
+    handler.handle(http_call=True)
     return app.response_class(
         response={"status": "FINISHED"},
         status=200,

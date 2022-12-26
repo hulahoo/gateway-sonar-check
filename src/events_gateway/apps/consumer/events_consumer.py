@@ -3,6 +3,7 @@ from typing import Dict, Any, Optional
 
 from events_gateway.config.config import settings
 from events_gateway.config.log_conf import logger
+from events_gateway.apps.services import benchmark
 from events_gateway.apps.consumer.services import convert_to_dict
 from events_gateway.apps.consumer.selectors import stat_received_provider
 from events_gateway.apps.producer.produce_message import producer_entrypoint
@@ -17,18 +18,26 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
     client.
     """
 
-    def handle(self) -> None:
-        incoming_events = bytes.decode(self.request)
+    @benchmark
+    def handle(
+        self,
+        *,
+        http_call: bool = False
+    ) -> None:
+        if http_call:
+            incoming_events = bytes.decode(self.request)
+        else:
+            incoming_events = bytes.decode(self.request.recv(1024).strip())
         stat_received_provider.create()
         logger.info("Stat received increased")
-        received_log_statistic = self.record_to_json(incoming_events=incoming_events)
-        logger.info(f"Retrieved log statistic: {received_log_statistic}")
-        if received_log_statistic is not None:
+        json_event = self.record_to_json(incoming_events=incoming_events)
+        logger.info(f"Retrieved log statistic: {json_event}")
+        if json_event is not None:
             try:
-                self.send_incoming_event_to_kafka(incoming_events=received_log_statistic)
-                logger.info(f"Data was sent to events collector. Data is: {received_log_statistic}")
+                self.send_incoming_event_to_kafka(incoming_events=json_event)
+                logger.info(f"Data was sent to events collector. Data is: {json_event}")
             except Exception as e:
-                logger.error(f"Error occured: {e}")
+                logger.error(f"Error occured when send message. Error is: {e}")
                 return
 
     @staticmethod

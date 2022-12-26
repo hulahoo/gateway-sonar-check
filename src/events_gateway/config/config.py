@@ -4,9 +4,9 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
 
     EVENTS_PORT: int = 8000
-    EVENTS_HOST: str = "0.0.0.0"
-    KAFKA_BOOTSTRAP_SERVER: str = "kafka:9092"
-    EVENTS_COLLECTOR_TOPIC: str = "collector"
+    EVENTS_HOST: str = "localhost"
+    KAFKA_BOOTSTRAP_SERVER: str = "localhost"
+    EVENTS_COLLECTOR_TOPIC: str = "syslog"
     CSRF_ENABLED: bool = True
     SESSION_COOKIE_SECURE: bool = True
 

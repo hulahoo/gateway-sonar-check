@@ -46,20 +46,10 @@ class BaseProducer(AbstractProducer):
         :param topic: топик куда данные будут отправлены
         :type topic: `class: Union[List, str]`
         """
-        try:
-            if isinstance(topic, str):
-                producer.send(topic=topic, value=data)
-                logger.info(f"Data send to: '{topic}' topic")
-            elif isinstance(topic, list):
-                sequence_of_topics = topic
-                for _topic in sequence_of_topics:
-                    producer.send(topic=_topic, value=data)
-                logger.info(f"Data send to: {topic} topic")
-            producer.flush()
-        except Exception as e:
-            logger.error(f"Error occured when send message. Error is: {e}")
-        finally:
-            self._stop_producer()
+        logger.info(f"Sending data to: {topic}")
+        producer.send(topic=topic, value=data)
+        producer.flush()
+        logger.info(f"Data send to: '{topic}' topic")
 
     def _start_producer(self) -> KafkaProducer:
         """
