@@ -64,6 +64,20 @@ events-gateway
 python3 test.py
 ```
 
+### Требования к инфраструктуре
+1. Минимальная версия Kafka:
+  ```yaml
+    wurstmeister/kafka:>=2.13-2.7.2
+  ```
+2. Минимальная версия Postgres:
+  ```yaml
+    postgres:>=14-alpine
+  ```
+3. Минимальная версия zookeper:
+  ```yaml
+    wurstmeister/zookeeper
+  ```
+
 ### Запуск с помощью докера
 
 1. Dockerfile:
@@ -118,7 +132,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   postgres_db:
-    image: postgres:13.8-alpine
+    image: postgres:14-alpine
     container_name: db
     restart: unless-stopped
     expose:
