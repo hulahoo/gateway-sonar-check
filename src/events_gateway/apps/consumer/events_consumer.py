@@ -18,19 +18,22 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
     client.
     """
 
-    @benchmark
-    def handle(
-        self,
-        *,
-        http_call: bool = False
-    ) -> None:
-        if http_call:
-            incoming_events = bytes.decode(self.request)
+    def __init__(self, request: str, client_address: tuple, server: str, http_call: bool = False) -> None:
+        self.http_call = http_call
+        self.incoming_events = None
+        super().__init__(request, client_address, server)
+
+    def setup(self):
+        if self.http_call:
+            self.incoming_events = bytes.decode(self.request)
         else:
-            incoming_events = bytes.decode(self.request.recv(1024).strip())
+            self.incoming_events = bytes.decode(self.request.recv(1024).strip())
+
+    @benchmark
+    def handle(self) -> None:
         stat_received_provider.create()
         logger.info("Stat received increased")
-        json_event = self.record_to_json(incoming_events=incoming_events)
+        json_event = self.record_to_json(incoming_events=self.incoming_events)
         logger.info(f"Retrieved log statistic: {json_event}")
         if json_event is not None:
             try:
