@@ -34,6 +34,7 @@ class SyslogTCPHandler(socketserver.BaseRequestHandler):
         stat_received_provider.create()
         logger.info("Stat received increased")
         json_event = self.record_to_json(incoming_events=self.incoming_events)
+        json_event["source_message"] = self.incoming_events
         logger.info(f"Retrieved log statistic: {json_event}")
         if json_event is not None:
             try:

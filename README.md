@@ -130,7 +130,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   db:
-    image: db_image:staging
+    image: rshb-cti-db-postgres:staging
 
   gateway:
     restart: always

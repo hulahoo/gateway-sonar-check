@@ -48,7 +48,6 @@ class BaseProducer(AbstractProducer):
         """
         logger.info(f"Sending data to: {topic}")
         producer.send(topic=topic, value=data)
-        producer.flush()
         logger.info(f"Data send to: '{topic}' topic")
 
     def _start_producer(self) -> KafkaProducer:
