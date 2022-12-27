@@ -3,28 +3,26 @@
 Сервис для приема входящих сообщений от SIEM и маршрутизации их дальнейшей в Kafka
 
 ## Информация о протоколе SYSLOG в проекте
-Для настройки порта и хоста по которым сервис должен быть доступным, указываем в .env файле следующее:
+Для настройки порта и хоста по которым сервис должен быть доступным, указываем в .env файле следующее(пример):
     ```
-    EVENTS_PORT=your_port
-    EVENTS_HOST=your_host
+    EVENTS_PORT=5000
+    EVENTS_HOST=localhost
     ```
 
 ## Информаци о ENV-параметрах
-Имеющиеся env-параметры в проекте:
+Имеющиеся env-параметры в проекте(пример):
     ```
-    EVENTS_PORT
-    EVENTS_HOST
-    SESSION_COOKIE_SECURE
-    CSRF_ENABLED
-    APP_POSTGRESQL_HOST
-    APP_POSTGRESQL_PASSWORD
-    APP_POSTGRESQL_USER
-    APP_POSTGRESQL_NAME
-    APP_POSTGRESQL_PORT
-    KAFKA_BOOSTRAP_SERVER
-    EVENTS_COLLECTOR_TOPIC
-    ALLOW_ANONYMOUS_LOGIN=(yes/no)
-    ALLOW_PLAINTEXT_LISTENER=(yes/no)
+    EVENTS_PORT=500
+    EVENTS_HOST=localhost
+    SESSION_COOKIE_SECURE=True
+    CSRF_ENABLED=True
+    APP_POSTGRESQL_HOST=localhost
+    APP_POSTGRESQL_PASSWORD=password
+    APP_POSTGRESQL_USER=postgres
+    APP_POSTGRESQL_NAME=db
+    APP_POSTGRESQL_PORT=5432
+    KAFKA_BOOSTRAP_SERVER=localhost:9092
+    EVENTS_COLLECTOR_TOPIC=collector
     ```
 
 ## Информация о файлах конфигурации
@@ -179,4 +177,3 @@ cat restore.sql | docker exec -i db psql -U dbuser -d db
 ```
 
 5. Перзапустить контейнер worker
-
